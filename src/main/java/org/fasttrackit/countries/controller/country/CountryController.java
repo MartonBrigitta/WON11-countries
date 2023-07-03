@@ -1,9 +1,10 @@
-package org.fasttrackit.countries.country;
+package org.fasttrackit.countries.controller.country;
 
 import lombok.RequiredArgsConstructor;
+import org.fasttrackit.countries.model.country.Country;
+import org.fasttrackit.countries.service.country.CountryService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -15,20 +16,19 @@ public class CountryController {
 
     @GetMapping // GET http://host:port/countries
     public List<Country> getAll(){
+
         return countryService.getAllCountries();
     }
 
     @GetMapping ("/first") // GET http://host:port/countries/first
     public Country getFirst(){
+
         return countryService.getAllCountries().get(0);
     }
 
     @GetMapping ("/{id}") // GET http://host:port/countries/46
     public Country getById(@PathVariable long id){
-        return countryService.getAllCountries().stream()
-                .filter(country -> country.getId()==id)
-                .findFirst()
-                .orElse(null);
+        return countryService.getById(id);
     }
 
     @DeleteMapping("/{id}")
